@@ -1,0 +1,48 @@
+Authentication is a processing of verifying the identity of a user or a clinet.
+3 main types of authentication techniques:
+Knowledge factor- something you know(passcode, answer to a question)
+posession factor- something you have(token)
+inherence factor- something you are(biometric, facial scan)
+
+Differences b/w Authentication and Authorisation.?
+Authentication is process of verifying the identity of a person who they claim to be. 
+Authorisation is the process of verifying whether a person can do something.
+
+How authentication vulnerabilities arise.?
+2 ways
+- Poor authentication mechanism( easy to bypass by brute force method)
+- Poor coding implementation or logic flaws( broken authentication)
+
+Vulnerabilities in authenticaion Mechanisms:
+1. Vulnerabilities in password based login
+	In this the user is registerd for an accunt or the administrator assigns an 
+account with unique username and password.
+	Brute-Force Attacks:
+		It is a trail and error method to guess the credentials of an user.
+		If the website is solely reliable on password to verify the user then 
+if there is no sufficient mechanism then it would be compromised by brute force 
+method.
+	Bruteforcing usernames: firstname.lastname@example_company.com -> publicly 
+availale information
+	Bruteforcing Passwords:The users may make some predictible changes to the 
+passwords like Password1! or password2!@ like this.
+	They can be easily guessed by the human knowledge and can be brute forces.
+Username Enumeration:
+Usernames can be guessed by checking in the login form or the registration form as the 
+existing email is entered the website shows the email has already taken.
+- Status codes
+- Error Messages
+- Response Times
+Labs:
+1. Username enumeraion via different responses.
+	Performing dictionar attacks( brute forcing with known usernames)
+2. Username enumeration via subtly different response.
+	same procesure as above.
+Note:
+We can use cluster bomb attack to gain both the username and password at once. But it 
+is always efficient if we find the username first and the password to that user next.
+
+3. Username enumeration via response timing
+	X-Forwardrd-For Header -> to spoof the ip address to bypass the ip based 
+login(in case of limited login attempts)
+
