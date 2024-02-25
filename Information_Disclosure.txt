@@ -1,0 +1,138 @@
+What is Information Disclosure.?
+Information disclosure is when a website accidentally reveals sensitive infromation to the public users.
+The information includes--
+- Data about other users like financial information or personal infromation.
+- Sensitive commercial or business information.
+- Technical data about the website or infrastructure.
+
+Examples of Information Disclosure--
+1. Revealing the names of the directories, their structure and their content in the robots.txt.
+2. Providing access to the source code via temporary backups.
+3. Explicitly mentioning the names of database tables and columns in the error messages.
+4. Unnecessarily exposing the sensitive data.
+5. Hardcoding the API keys, database credentials, IP addresses in the source codes.
+6. Hinting the existence or non-existence of the resources like usernames etc. via a subtly different 
+response.
+
+
+How do Information Disclosure vulnerabilities arise.?
+- Faliure to remove internal content from the public content.
+- Insecure configuraion of the websites and related technologies.
+- Flawed design and behaviour of the application.
+
+Impact of Information Disclosure--
+The impact may be direct or indirect.
+- If the information is disclosed from a shopping website (credit card information) then it comes under 
+direct impact.
+
+- If only the technical information like directory structure is disclosed for the attacker, them it comes 
+unser the indirect impact.
+
+The impact level depends upon the type of infromation disclosed and what the attacker can do with that 
+information.
+
+Techniques and tools helpful to identify the information disclosure vulnerabilities while testing are--
+1. Fuzzing.
+2. Using Burp Scanner.
+3. Using Burp's Engagement tools.
+4. Engineering Informative Responses. 
+
+1. Fuzzing
+   Submitting the unexpected data in the parameters to see the differences in the responses.
+   This can be automated by using the fuzz wordlist in the burp.
+   -Add payload positions to parameters and use pre-built wordlists of fuzz strings to test a high volume of 
+    different inputs in quick succession.
+   -Easily identify differences in responses by comparing HTTP status codes, response times, lengths, and so 
+    on.
+   -Use grep matching rules to quickly identify occurrences of keywords, such as error, invalid, SELECT, SQL, 
+   and so on.
+   -Apply grep extraction rules to extract and compare the content of interesting items within responses.
+
+BApp Store : Logger++ (Extension).
+
+2. Using Burp Scanner
+   Burp Scanner can find the infromation disclosure vulerabilities while browsing the web. Can schedule 
+   automated scans and audit the targetted website.
+   Burp Scanner will alert when it finds any sensitive information like email address, credit card details, 
+   private keys, etc.
+
+3. Burp Engagement Tools
+   Burp provides several engagement tools that you can use to find interesting information in the target 
+   website more easily. You can access the engagement tools from the context menu - just right-click on any 
+   HTTP message, Burp Proxy entry, or item in the site map and go to "Engagement tools".
+   The following tools useful in this context is:
+   -Search
+   -Find Commnets
+   -Discover Content
+
+4. Engineering Informative Responses
+   Verbose error messages can sometimes disclose interesting information while you go about your normal 
+   testing workflow. However, by studying the way error messages change according to your input, you can take 
+   this one step further. In some cases, you will be able to manipulate the website in order to extract 
+   arbitrary data via an error message.
+
+Common Sources of Information Disclosure:
+1. Files for web crawlers(/robots.txt, /sitemap.xml)
+2. Directory Listing
+3. Developer Comments
+4. Error Messages
+5. Debugging Data
+6. User account pages
+7. Backup files
+8. Insecure Configuration
+9. Version control history
+
+
+
+
+Labs:
+1. Information Disclosure in error messages
+  GET /product?productId="example"
+  (type information about the version)
+
+2. Insecure disclosure on debug page
+   Go to the "Target" > "Site Map" tab. Right-click on the top-level entry for the lab and select "Engagement 
+   tools" > "Find comments". Notice that the home page contains an HTML comment that contains a link called 
+   "Debug". This points to /cgi-bin/phpinfo.php.
+   In the site map, right-click on the entry for /cgi-bin/phpinfo.php and select "Send to Repeater".
+
+3. Source code Disclosure via backup files
+   Browse to /robots.txt and notice that it reveals the existence of a /backup directory. Browse to /backup 
+   to find the file ProductTemplate.java.bak. Alternatively, right-click on the lab in the site map and go to 
+   "Engagement tools" > "Discover content". Then, launch a content discovery session to discover the /backup 
+   directory and its contents.
+   Browse to /backup/ProductTemplate.java.bak to access the source code.
+
+4. Authentication bypass via information disclosure
+   In Burp Repeater, browse to GET /admin. The response discloses that the admin panel is only accessible if 
+   logged in as an administrator, or if requested from a local IP.
+   Send the request again, but this time use the TRACE method:
+
+   TRACE /admin
+   Study the response. Notice that the X-Custom-IP-Authorization header, containing your IP address, was 
+   automatically appended to your request. This is used to determine whether or not the request came from the 
+   localhost IP address.
+   Go to "Proxy" > "Options", scroll down to the "Match and Replace" section, and click "Add". Leave the 
+   match condition blank, but in the "Replace" field, enter:
+
+   X-Custom-IP-Authorization: 127.0.0.1
+   Burp Proxy will now add this header to every request you send.
+
+   Browse to the home page. Notice that you now have access to the admin panel, where you can delete carlos.
+
+5. Information Disclosure in version control history
+   Open the lab and browse to /.git to reveal the lab's Git version control data.
+   Download a copy of this entire directory. For Linux users, the easiest way to do this is using the 
+   command:
+
+   wget -r https://YOUR-LAB-ID.web-security-academy.net/.git/
+   Windows users will need to find an alternative method, or install a UNIX-like environment, such as Cygwin, 
+   in order to use this command.
+
+   Explore the downloaded directory using your local Git installation. Notice that there is a commit with the 
+   message "Remove admin password from config".
+   Look closer at the diff for the changed admin.conf file. Notice that the commit replaced the hard-coded 
+   admin password with an environment variable ADMIN_PASSWORD instead. However, the hard-coded password is still 
+   clearly visible in the diff.
+   Go back to the lab and log in to the administrator account using the leaked password.
+   To solve the lab, open the admin interface and delete carlos.
