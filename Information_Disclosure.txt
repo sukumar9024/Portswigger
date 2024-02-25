@@ -1,75 +1,62 @@
 What is Information Disclosure.?
-Information disclosure is when a website accidentally reveals sensitive infromation to the public users.
-The information includes--
-- Data about other users like financial information or personal infromation.
+Information disclosure is when a website accidentally reveals sensitive information to the public users.
+The information includes —
+- Data about other users like financial information or personal information.
 - Sensitive commercial or business information.
 - Technical data about the website or infrastructure.
 
-Examples of Information Disclosure--
-1. Revealing the names of the directories, their structure and their content in the robots.txt.
+Examples of Information Disclosure —
+1. Revealing the names of the directories, their structure, and their content in the robots.txt.
 2. Providing access to the source code via temporary backups.
 3. Explicitly mentioning the names of database tables and columns in the error messages.
 4. Unnecessarily exposing the sensitive data.
-5. Hardcoding the API keys, database credentials, IP addresses in the source codes.
-6. Hinting the existence or non-existence of the resources like usernames etc. via a subtly different 
+5. Hardcoding the API keys, database credentials, and IP addresses in the source codes.
+6. Hinting the existence or non-existence of the resources like usernames etc. via a subtly different
 response.
 
-
 How do Information Disclosure vulnerabilities arise.?
-- Faliure to remove internal content from the public content.
-- Insecure configuraion of the websites and related technologies.
-- Flawed design and behaviour of the application.
+- Failure to remove internal content from the public content.
+- Insecure configuration of the websites and related technologies.
+- Flawed design and behavior of the application.
 
-Impact of Information Disclosure--
+Impact of Information Disclosure —
 The impact may be direct or indirect.
-- If the information is disclosed from a shopping website (credit card information) then it comes under 
-direct impact.
+- If the information is disclosed from a shopping website (credit card information) then it comes under direct impact.
 
-- If only the technical information like directory structure is disclosed for the attacker, them it comes 
-unser the indirect impact.
+- If only the technical information like directory structure is disclosed to the attacker, then it comes under the indirect impact.
 
-The impact level depends upon the type of infromation disclosed and what the attacker can do with that 
+The impact level depends upon the type of information disclosed and what the attacker can do with that
 information.
 
-Techniques and tools helpful to identify the information disclosure vulnerabilities while testing are--
+Techniques and tools helpful to identify the information disclosure vulnerabilities while testing are —
 1. Fuzzing.
 2. Using Burp Scanner.
-3. Using Burp's Engagement tools.
-4. Engineering Informative Responses. 
+3. Using Burp’s Engagement tools.
+4. Engineering Informative Responses.
 
 1. Fuzzing
-   Submitting the unexpected data in the parameters to see the differences in the responses.
-   This can be automated by using the fuzz wordlist in the burp.
-   -Add payload positions to parameters and use pre-built wordlists of fuzz strings to test a high volume of 
-    different inputs in quick succession.
-   -Easily identify differences in responses by comparing HTTP status codes, response times, lengths, and so 
-    on.
-   -Use grep matching rules to quickly identify occurrences of keywords, such as error, invalid, SELECT, SQL, 
-   and so on.
-   -Apply grep extraction rules to extract and compare the content of interesting items within responses.
+Submitting the unexpected data in the parameters to see the differences in the responses.
+This can be automated by using the fuzz wordlist in the burp.
+-Add payload positions to parameters and use pre-built wordlists of fuzz strings to test a high volume of different inputs in quick succession.
+-Easily identify differences in responses by comparing HTTP status codes, response times, lengths, and so on.
+-Use grep matching rules to quickly identify occurrences of keywords, such as error, invalid, SELECT, SQL, and so on.
+-Apply grep extraction rules to extract and compare the content of interesting items within responses.
 
 BApp Store : Logger++ (Extension).
 
 2. Using Burp Scanner
-   Burp Scanner can find the infromation disclosure vulerabilities while browsing the web. Can schedule 
-   automated scans and audit the targetted website.
-   Burp Scanner will alert when it finds any sensitive information like email address, credit card details, 
-   private keys, etc.
+Burp Scanner can find information disclosure vulnerabilities while browsing the web. Can schedule automated scans and audit the targetted website.
+Burp Scanner will alert you when it finds any sensitive information like email address, credit card details, private keys, etc.
 
 3. Burp Engagement Tools
-   Burp provides several engagement tools that you can use to find interesting information in the target 
-   website more easily. You can access the engagement tools from the context menu - just right-click on any 
-   HTTP message, Burp Proxy entry, or item in the site map and go to "Engagement tools".
-   The following tools useful in this context is:
-   -Search
-   -Find Commnets
-   -Discover Content
+Burp provides several engagement tools that you can use to find interesting information onthe target website more easily. You can access the engagement tools from the context menu — just right-click on any HTTP message, Burp Proxy entry, or item in the site map and go to “Engagement tools”.
+The following tools useful in this context is:
+-Search
+-Find Comments
+-Discover Content
 
 4. Engineering Informative Responses
-   Verbose error messages can sometimes disclose interesting information while you go about your normal 
-   testing workflow. However, by studying the way error messages change according to your input, you can take 
-   this one step further. In some cases, you will be able to manipulate the website in order to extract 
-   arbitrary data via an error message.
+Verbose error messages can sometimes disclose interesting information while you go about your normal testing workflow. However, by studying the way error messages change according to your input, you can take this one step further. In some cases, you will be able to manipulate the website extract arbitrary data via an error message.
 
 Common Sources of Information Disclosure:
 1. Files for web crawlers(/robots.txt, /sitemap.xml)
@@ -81,8 +68,6 @@ Common Sources of Information Disclosure:
 7. Backup files
 8. Insecure Configuration
 9. Version control history
-
-
 
 
 Labs:
@@ -142,22 +127,13 @@ Labs:
 
 How to Prevent Information Disclosure.?
 
-Preventing information disclosure completely is tricky due to the huge variety of ways in which it can occur. 
-However, there are some general best practices that you can follow to minimize the risk of these kinds of 
-vulnerability creeping into your own websites.
+Preventing information disclosure completely is tricky due to the huge variety of ways in which it can occur. However, there are some general best practices that you can follow to minimize the risk of these kinds of
+vulnerability creeping into your websites.
 
-
--Make sure that everyone involved in producing the website is fully aware of what information is considered 
-sensitive. Sometimes seemingly harmless information can be much more useful to an attacker than people 
-realize. Highlighting these dangers can help make sure that sensitive information is handled more securely in 
-general by your organization.
--Audit any code for potential information disclosure as part of your QA or build processes. It should be 
-relatively easy to automate some of the associated tasks, such as stripping developer comments.
--Use generic error messages as much as possible. Don't provide attackers with clues about application 
-behavior 
-unnecessarily.
+-Make sure that everyone involved in producing the website is fully aware of what information is considered sensitive. Sometimes seemingly harmless information can be much more useful to an attacker than people
+realize. Highlighting these dangers can help make sure that sensitive information is handled more securely in general by your organization.
+-Audit any code for potential information disclosure as part of your QA or build processes. It should be relatively easy to automate some of the associated tasks, such as stripping developer comments.
+-Use generic error messages as much as possible. Don’t provide attackers with clues about application behavior unnecessarily.
 -Double-check that any debugging or diagnostic features are disabled in the production environment.
--Make sure you fully understand the configuration settings, and security implications, of any third-party 
-technology that you implement. Take the time to investigate and disable any features and settings that you 
-don't actually need.
-
+-Make sure you fully understand the configuration settings, and security implications, of any third-party technology that you implement. Take the time to investigate and disable any features and settings that you
+don’t need.
